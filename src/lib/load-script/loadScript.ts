@@ -1,15 +1,15 @@
-import { BMapGLConfig } from '@/types/vue-baidu-map-gl'
+import { BMapGLConfig } from '../options'
 
 export default function ({
   ak,
   version = '1.0',
   type = 'webgl'
-}: BMapGLConfig): Promise<BMapGL> {
+}: BMapGLConfig): Promise<any> {
   if (global.BMapGL !== undefined) {
     return Promise.resolve(global.BMapGL)
   } else {
     if (global.$$chain === undefined || global.$$chain === null) {
-      global.$$chain = new Promise<BMapGL>((resolve, reject) => {
+      global.$$chain = new Promise<any>((resolve, reject) => {
         const script = document.createElement('script')
         script.src = `https://api.map.baidu.com/api?v=${version}&type=${type}&ak=${ak}&callback=$$MapLoadCallback`
         global.$$MapLoadCallback = () => {

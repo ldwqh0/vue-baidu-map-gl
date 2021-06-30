@@ -1,12 +1,13 @@
 import Vue, { PropType, VNode } from 'vue'
-import loadScript from './loadScript'
-import { BMapGLConfig, MapTypeId } from '@/types/vue-baidu-map-gl'
+import loadScript from '@/lib/load-script'
+import { BMapGLConfig, globalConfig, MapTypeId } from '../options'
 
 export default Vue.extend({
   props: {
     options: {
       type: [Object] as PropType<BMapGLConfig>,
-      required: true
+      required: false,
+      default: () => ({})
     },
     minZoom: {
       type: Number as PropType<number>,
@@ -31,9 +32,17 @@ export default Vue.extend({
   },
 
   mounted () {
-    loadScript(this.options).then(BMapGL => {
-      const map = new BMapGL.Map(this.$el)
-      map.centerAndZoom(new BMapGL.Point(121.491, 31.233), 11)
+    loadScript({
+      ...globalConfig,
+      ...this.options
+    }).then(BMapGL => {
+      const map = new BMapGL.Map(this.$el, {
+        minZoom: this.minZoom,
+        maxZoom: this.maxZoom,
+        mapType: this.mapType,
+        enableAutoResize: this.enableAutoResize
+      })
+      map.centerAndZoom(new BMapGL.Point(106.239187, 35.862655), 4)
       this.$emit('mounted', map)
     })
   },

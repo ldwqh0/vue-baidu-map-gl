@@ -34,3 +34,10 @@ export interface MapOptions {
    */
   enableAutoResize: boolean;
 }
+
+const globalConfig: BMapGLConfig = {
+  ak: ''
+}
+export {
+  globalConfig
+}

@@ -3,11 +3,15 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 import { fileURLToPath } from 'url'
+import { entries, externals } from './components.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default function (envParams, { mode = 'production' }) {
   return {
+    entry: {
+      ...entries
+    },
     mode,
     module: {
       rules: [{
@@ -40,7 +44,8 @@ export default function (envParams, { mode = 'production' }) {
       minimizer: ['...', new CssMinimizerPlugin()],
     },
     externals: {
-      vue: 'vue'
+      vue: 'vue',
+      ...externals
     },
     plugins: [
       new CleanWebpackPlugin()
@@ -50,7 +55,7 @@ export default function (envParams, { mode = 'production' }) {
       library: {
         type: 'umd'
       },
-      path: path.resolve(__dirname, '..', 'dist'),
+      path: path.resolve(__dirname, '..', 'lib'),
     }
   }
 }

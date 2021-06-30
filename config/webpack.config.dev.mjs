@@ -1,4 +1,3 @@
-import proxy from './proxy_dev.mjs'
 import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
@@ -36,7 +35,6 @@ export default function (envParams, { mode = 'development' } = {}) {
         errors: true
       },
       inline: true,
-      proxy: proxy(envParams),
       historyApiFallback: {
         rewrites: [{
           from: new RegExp(`^${envParams.CONTEXT_PATH}`),

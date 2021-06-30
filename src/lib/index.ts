@@ -1,5 +1,2 @@
-import BMap from './BMap'
-
-export { default as loadScript } from './loadScript'
-
-export default BMap
+export { default as BMap } from '@/lib/b-map'
+export { default as loadScript } from '@/lib/load-script'

@@ -27,8 +27,9 @@ export default function (envParams, { mode = 'production' }) {
         loader: 'ts-loader',
         exclude: (path) => /(node_modules|bower_components)/.test(path),
         options: {
+          compiler: 'ttypescript',
           appendTsSuffixTo: [/\.vue$/],
-          transpileOnly: true
+          // transpileOnly: true
         }
       }, {
         test: /\.vue$/,
@@ -59,7 +60,6 @@ export default function (envParams, { mode = 'production' }) {
       new ESLintWebpackPlugin({
         extensions: ['ts', 'js', 'vue'],
       }),
-
       new webpack.DefinePlugin({
         // 将配置对象env抽象为全局对象
         env: Object.entries(envToUse).reduce((acc, [key, value]) => ({

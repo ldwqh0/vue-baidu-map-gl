@@ -1,13 +1,16 @@
-import Vue from 'vue'
-import App from './App.vue'
+import { BMap, loadScript } from './lib'
+import _Vue, { PluginObject } from 'vue'
+import { BMapGLConfig, globalConfig } from './lib/options'
 
-console.log('Created By ldwqh0@outlook.com')
+export default {
+  install (Vue: typeof _Vue, config: BMapGLConfig) {
+    // 将选项合并到全局配置中
+    Object.assign(globalConfig, config)
+    Vue.component('BMap', BMap)
+  }
+} as PluginObject<unknown>
 
-/**
- *  一定要使用 render函数创建app,这样就不需要依赖完整的esm，也就是不需要打包vue的编译模块了，
- *  vue的模板编译模块体积打约是25KB左右
- */
-/* eslint-disable no-new */
-new Vue({
-  render: h => h(App)
-}).$mount('#app')
+export {
+  BMap,
+  loadScript
+}
